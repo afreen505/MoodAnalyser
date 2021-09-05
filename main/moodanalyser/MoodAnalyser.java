@@ -2,23 +2,28 @@ package moodanalyser;
 
 public class MoodAnalyser {
     private String message;
-
     public MoodAnalyser(String message) {
         this.message = message;
     }
 
+
     /**
-     * If message contains "sad" it returns SAD else it returns HAPPY. If message is
-     * Null it returns HAPPY
+     * If message is sad it returns SAD else if message is empty it throws custom exception "EMPTY_EXCEPTION"
+     * Else it returns HAPPY
+     * @return mood
+     * @throws MoodAnalysisException
      */
-    public String analyseMood() {
+    public String analyseMood() throws MoodAnalysisException {
         try {
-            if (message.contains("sad"))
+            if(message.isEmpty()) {
+                throw new MoodAnalysisException(MoodAnalysisException.expectedType.EMPTY_EXCEPTION, "Please enter a proper message");
+            }
+            else if (message.contains("sad"))
                 return "SAD";
             else
                 return "HAPPY";
         } catch (NullPointerException e) {
-            return "HAPPY";
+            throw new MoodAnalysisException(MoodAnalysisException.expectedType.Null_EXCEPTION, "Please enter a proper message");
         }
     }
 }
